@@ -1,0 +1,146 @@
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Modal,
+  Button,
+} from 'react-native';
+
+import { useState } from 'react';
+
+export default function App() {
+  const [isVisible, setVisible] = useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const ModelError = (update: Boolean) => {
+    return  <View>
+              <Modal animationType="slide" transparent={true} visible={isVisible}>
+                <View style={styles.btnSenha}>
+                  <Text style={styles.txtModal}>Usuario ou senha errada</Text>
+                    <Button title="fechar" onPress={() => setVisible(update)} />
+               </View>
+              </Modal>
+            </View>
+  };
+
+  function isValidUsername(){
+    if (username == 'a'){
+       console.log(username);
+       console.log(password);
+      return <ModelError/>;
+    }
+  }
+
+  return (
+    <KeyboardAvoidingView style={styles.background}>
+
+
+      <View style={styles.viewLogo}>
+        <Image source={require('./assets/logo.png')} style={styles.logo} />
+      </View>
+
+
+
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Usuário"
+          autoCorrect={false}
+          onChangeText={u => setUsername(u)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          autoCorrect={false}
+          secureTextEntry={true}
+          onChangeText={p => setPassword(p)}
+        />
+
+        <TouchableOpacity style={styles.btnEnviar}
+          onPress = {isValidUsername}
+        >
+          <Text style={styles.txtEnviar}>Entrar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnCriarConta}>
+          <Text style={styles.txtCriarConta}>Criar Conta</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#222222',
+    alignItems: 'center',
+  },
+  viewLogo: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingTop: 0,
+    justifyContent: 'space-around',
+  },
+  logo: {
+    height: 300,
+    width: 300,
+    marginTop: 10,
+  },
+  input: {
+    backgroundColor: '#FFF',
+    width: '90%',
+    marginBottom: 15,
+    color: '#222',
+    fontSize: 20,
+    borderRadius: 7,
+    padding: 10,
+  },
+
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+  },
+  btnEnviar: {
+    backgroundColor: '#0047ab',
+    width: '90%',
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+  },
+  txtEnviar: {
+    color: '#FFF',
+    fontSize: 20,
+  },
+  btnCriarConta: {
+    marginTop: 15,
+  },
+  txtCriarConta: {
+    color: '#FFF',
+  },
+  btnSenha: {
+    backgroundColor: "#C0C0C0",
+    margin: 20,
+    padding: 20,
+    borderRadius: 7,
+    elevation: 10,
+    flex: 3,
+    justifyContent: 'center',
+  },
+  txtModal: {
+    fontSize: 17,
+    fontWeight: "bold",
+    padding: 20,
+    backgroundColor: 'red'
+  },
+});
